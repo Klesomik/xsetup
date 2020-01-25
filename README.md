@@ -2,7 +2,7 @@
 
 There are some configuration files which I use on my linux machine
 
-### [bash](https://https://github.com/Klesomik/xsetup/tree/master/bash)
+### [bash](https://github.com/Klesomik/xsetup/tree/master/bash)
 
 ### [i3](https://github.com/Klesomik/xsetup/tree/master/i3)
 
