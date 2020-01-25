@@ -2,16 +2,18 @@
 
 There are some configuration files which I use on my linux machine
 
-### [bash](https://github.com/Klesomik/xsetup/bash)
+### [bash](https://https://github.com/Klesomik/xsetup/tree/master/bash)
 
-### [i3](https://github.com/Klesomik/xsetup/i3)
+### [i3](https://github.com/Klesomik/xsetup/tree/master/i3)
 
-### [Polybar](https://github.com/Klesomik/xsetup/polybar)
+### [Polybar](https://github.com/Klesomik/xsetup/tree/master/polybar)
 
-### [Rofi](https://github.com/Klesomik/xsetup/rofi)
+### [Rofi](https://github.com/Klesomik/xsetup/tree/master/rofi)
 
-### [Urxvt]()
+### [Xorg](https://github.com/Klesomik/xsetup/tree/master/xorg)
 
-### [Vim](https://github.com/Klesomik/xsetup/vim)
+### [Systemd](https://github.com/Klesomik/xsetup/tree/master/systemd)
 
-### [Compton](https://github.com/Klesomik/xsetup/flameshot)
+### [Vim](https://github.com/Klesomik/xsetup/tree/master/vim)
+
+### [Compton](https://github.com/Klesomik/xsetup/tree/master/flameshot)
