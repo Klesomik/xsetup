@@ -1,6 +1,10 @@
 /dotfiles/*
+
 !/dotfiles/alacritty/
 !/dotfiles/compton/
 !/dotfiles/i3/
 !/dotfiles/polybar/
 !/dotfiles/rofi/
+
+/dotfiles/zsh/.oh-my-zsh
+!/dotfiles/zsh

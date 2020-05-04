@@ -1,0 +1,98 @@
+# prompt {{{
+# git_info is stolen, but I dont remember from where
+git_info() {
+  # Exit if not inside a Git repository
+  ! git rev-parse --is-inside-work-tree > /dev/null 2>&1 && return
+
+  # Git branch/tag, or name-rev if on detached head
+  local GIT_LOCATION=${$(git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD)#(refs/heads/|tags/)}
+
+  local AHEAD="%F{71}⇡NUM%f"
+  local BEHIND="%F{6}⇣NUM%f"
+  local MERGING="%F{5}🗲%f"
+  local UNTRACKED="%F{245}●%f"
+  local MODIFIED="%F{202}●%f"
+  local STAGED="%F{191}●%f"
+
+  local -a DIVERGENCES
+  local -a FLAGS
+
+  local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
+  if [ "$NUM_AHEAD" -gt 0 ]; then
+    DIVERGENCES+=( "${AHEAD//NUM/$NUM_AHEAD}" )
+  fi
+
+  local NUM_BEHIND="$(git log --oneline ..@{u} 2> /dev/null | wc -l | tr -d ' ')"
+  if [ "$NUM_BEHIND" -gt 0 ]; then
+    DIVERGENCES+=( "${BEHIND//NUM/$NUM_BEHIND}" )
+  fi
+
+  local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
+  if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+    FLAGS+=( "$MERGING" )
+  fi
+
+  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    FLAGS+=( "$UNTRACKED" )
+  fi
+
+  if ! git diff --quiet 2> /dev/null; then
+    FLAGS+=( "$MODIFIED" )
+  fi
+
+  if ! git diff --cached --quiet 2> /dev/null; then
+    FLAGS+=( "$STAGED" )
+  fi
+
+  local -a GIT_INFO
+  GIT_INFO+=("")
+  [ -n "$GIT_STATUS" ] && GIT_INFO+=( "$GIT_STATUS" )
+  [[ ${#DIVERGENCES[@]} -ne 0 ]] && GIT_INFO+=( "${(j::)DIVERGENCES}" )
+  [[ ${#FLAGS[@]} -ne 0 ]] && GIT_INFO+=( "${(j::)FLAGS}" )
+  GIT_INFO+=( "%F{255}$GIT_LOCATION%f" )
+  GIT_INFO+=( '%{$reset_color%}' )
+  echo "${(j: :)GIT_INFO}"
+}
+
+prompt_setup_goga(){
+  ZSH_THEME_VIRTUALENV_PREFIX=" "
+  ZSH_THEME_VIRTUALENV_SUFFIX=" "
+  #base_prompt='%K{23}%F{7}$(virtualenv_prompt_info)%K{8}%F{7} %0~ %k%f'
+  post_prompt=' '
+  precmd_functions+=(prompt_goga_precmd)
+}
+
+prompt_goga_precmd(){
+  local gitinfo=$(git_info)
+  local venv="$(virtualenv_prompt_info)"
+  local pro=''
+  local symbol1=''
+  local symbol2=''
+
+    if [ -z ${GOGA_HIDE_PATH+x} ]; then
+      local show_path=' %0~ '
+    else
+      local show_path=''
+    fi
+
+  if [ "$venv" ]; then
+    pro="%K{23}%F{7}$venv%K{8}%F{23}$symbol1%F{7}$show_path"
+  else
+    pro="%K{8}%F{7}$show_path"
+  fi
+  if [ "$gitinfo" ]; then
+    pro="${pro}%F{7}%K{8}$symbol2 $gitinfo%F{8}%k$symbol1%f"
+  else
+    pro="${pro}%F{8}%k$symbol1%f%k"
+  fi
+  PROMPT="$pro$post_prompt"
+}
+
+function goga_hide(){
+    export GOGA_HIDE_PATH
+}
+function goga_show(){
+    unset GOGA_HIDE_PATH
+}
+
+# }}}

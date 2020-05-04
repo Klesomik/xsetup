@@ -1,0 +1,17 @@
+alias ls="exa --header"
+alias l="ls -la"
+
+alias grep="rg"
+
+alias vim="nvim"
+alias rvim="sudo nvim -u $XDG_CONFIG_HOME/nvim/init.vim"
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+alias pacman="sudo pacman"
+
+alias pdfmrg="pdftk"
+
+alias ffind="find . -type f | fzy"
