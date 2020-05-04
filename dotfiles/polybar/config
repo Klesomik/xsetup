@@ -1,0 +1,231 @@
+[colors]
+background     = #2E3440
+background-alt = #444
+foreground     = #D8DEE9
+foreground-alt = #4C566A
+primary        = #ffb52a
+secondary      = #e60053
+alert          = #BF616A
+
+; TODO: inherit; fix size of fonts
+[fonts]
+font-0 = "Fantasque Sans Mono Nerd Font:pixelsize=17;2"
+;font-1 = "Material Icons:size=16;2"
+font-1 = "Noto Color Emoji:scale=5:style=Regular;4"
+
+[bar/example]
+height = 40
+;offset-x = 5%
+;offset-y = 2%
+fixed-center = true
+line-size = 1
+line-color = #dfdfdf
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+;border-size = 3
+;border-color = ${colors.background}
+
+module-margin-left = 1
+module-margin-right = 1
+
+;font-0 = ${fonts.font-0}
+;font-1 = ${fonts.font-1}
+;font-2 = ${fonts.font-2}
+
+inherit = fonts
+
+cursor-click = pointer
+
+tray-position = right
+;tray-padding = 0
+tray-maxsize = 32
+
+padding = 2
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+modules-left = backlight volume battery temperature
+modules-center = i3
+modules-right = xkeyboard date
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.background}
+
+label-focused = %index%
+label-focused-background = ${colors.foreground-alt}
+label-focused-underline = ${colors.foreground-alt}
+label-focused-padding = 2
+
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+label-urgent = %index%
+llabel-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+[module/date]
+type = internal/date
+interval = 60
+time =  %H:%M
+date = ﭷ %a, %d/%m/%Y
+label = %time% | %date%
+format = %{A1:zenity --calendar:} <label> %{A}
+;exec ~/.config/polybar/scripts/popup-calendar.sh --popup &
+
+[module/wlan]
+type = internal/network
+interface = wlp0s20f3
+interval = 3.0
+;format-connected-padding = 1
+;format-disconnected-padding = 1
+format-connected = <label-connected>
+label-connected =  %essid%
+label-connected-foreground = ${colors.foreground}
+label-disconnected = 
+label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+blacklist-0 = num lock
+blacklist-1 = caps lock
+
+;format-prefix = " "
+;format-prefix-foreground = ${colors.foreground}
+;format-prefix-underline = ${colors.background-alt}
+
+layout-icon-0 = us;󾓦
+layout-icon-1 = ru;󾓬
+
+label-layout = %icon%
+;label-layout-underline = ${colors.background-alt}
+
+;label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.background}
+;label-indicator-underline = ${colors.background-alt}
+
+[module/battery]
+type = internal/battery
+
+full-at = 99
+
+battery = CMB1
+adapter = AC
+
+poll-interval = 5
+
+ramp-capacity-0 = 
+ramp-capacity-0-foreground = #BF616A
+ramp-capacity-1 = 
+ramp-capacity-1-foreground = #D08770
+ramp-capacity-2 = 
+ramp-capacity-2-foreground = #EBCB8B
+ramp-capacity-3 = 
+ramp-capacity-3-foreground = #A3BE8C
+ramp-capacity-4 = 
+ramp-capacity-4-foreground = #A3BE8C
+
+animation-charging-framerate = 750
+
+label = %percentage%%
+
+format-charging = %{F#88C0D0}%{F-} <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+label-charging = %percentage%%
+label-discharging = %percentage%%
+
+[module/volume]
+type = internal/alsa
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+
+master-mixer = Master
+
+format-volume = <label-volume>
+label-volume = 墳 %percentage%%
+label-volume-foreground = ${root.foreground}
+
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = 婢 %percentage%%
+
+;click-right = pavucontrol &
+
+[module/space]
+type = custom/text
+content = " "
+content-foreground = ${colors.foreground}
+content-background = ${colors.background}
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+
+label = %percentage%%
+
+;#ffe100
+format = %{F#EBCB8B}%{F-} <label>
+
+;scroll-up = xbacklight -inc 3
+;scroll-down = xbacklight -dec 3
+
+[module/bluetooth]
+type = custom/script
+exec = ~/.config/polybar/scripts/bluetooth.sh
+interval = 2
+click-left = exec blueberry
+;format-padding = 1
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+[module/vpn]
+type = custom/script
+exec = ~/.config/polybar/scripts/vpn.sh
+interval = 2
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+[module/temperature]
+type = internal/temperature
+
+interval = 2
+thermal-zone = 0
+
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input
+
+base-temperature = 20
+
+warn-temperature = 70
+
+;
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+
+label = %temperature-c%
+
+label-warn = %temperature-c%
+label-warn-foreground = #f00
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 

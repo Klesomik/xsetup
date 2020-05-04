@@ -1,0 +1,6 @@
+/dotfiles/*
+!/dotfiles/alacritty/
+!/dotfiles/compton/
+!/dotfiles/i3/
+!/dotfiles/polybar/
+!/dotfiles/rofi/
