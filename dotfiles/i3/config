@@ -196,7 +196,7 @@ bindsym $mod+Shift+Ctrl+b border pixel 2
 # Autostart
 exec $HOME/bin/touchpad.sh
 exec --no-startup-id compton -f
-exec feh --bg-scale /home/klesomik/xsetup/wallpapers/Milky_Way_Mountains_451743.jpg
+exec feh --bg-scale $HOME/src/xsetup/wallpapers/Milky_Way_Mountains_451743.jpg
 exec $XDG_CONFIG_HOME/polybar/scripts/launch.sh
 exec yandex-disk start
 exec yandex-disk-indicator &

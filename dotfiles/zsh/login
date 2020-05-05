@@ -1,13 +1,6 @@
 #setfont iso02-12x22
 #setfont ter-v32n
 
-# ~/ clean-up:
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-
-source $XDG_CONFIG_HOME/zsh/.env
-source $XDG_CONFIG_HOME/zsh/.functions
-source $XDG_CONFIG_HOME/zsh/.alias
-
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then exec startx -- -keeptty -nolisten tcp > $XDG_CONFIG_HOME/X11/.xorg.log 2>&1; fi
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    exec startx -- -keeptty -nolisten tcp > $XDG_CONFIG_HOME/X11/.xorg.log 2>&1;
+fi

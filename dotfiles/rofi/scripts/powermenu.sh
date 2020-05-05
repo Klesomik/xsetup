@@ -11,7 +11,7 @@ log_out=""
 # Variable passed to rofi
 options="$power_off\n$reboot\n$lock\n$suspend\n$log_out"
 
-cmd_promptmenu="/home/klesomik/.config/rofi/scripts/promptmenu.sh"
+cmd_promptmenu="$XDG_CONFIG_HOME/rofi/scripts/promptmenu.sh"
 
 chosen="$(echo -e "$options" | $rofi_command -dmenu -selected-row 2)"
 case $chosen in
